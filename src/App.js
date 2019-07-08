@@ -3,19 +3,31 @@ import './App.css';
 
 class App extends Component {
   state = {
-    shape: 'Please Select A Shape'
+    shape: ''
+  }
+
+  componentDidMount() {
+    let arr = ['Square', 'Circle', 'Triangle', 'Oval', 'Star', 'Triangle_down', 'Triangle_right', 'Triangle_left', 'Trapezium'];
+    let obj = {};
+    arr.forEach(x => obj[x] = 0);
+    this.setState({
+      count: obj
+    })
   }
 
   handleClick = (e) => {
+    let newObj = Object.assign(this.state.count);
+    newObj[e.target.dataset.shape]++;
     this.setState({
-      shape: e.target.dataset.shape
+      shape: e.target.dataset.shape,
+      count: newObj
     })
   }
 
   render() {
     return (
       <div className="container">
-        <div className="navbar">Selected:&nbsp;&nbsp;&nbsp;&nbsp;<span className="name">{this.state.shape}</span></div>
+        <div className="navbar">Selected:&nbsp;&nbsp;&nbsp;&nbsp;<span className="name">{this.state.shape}</span> - Clicked: &nbsp;&nbsp;&nbsp;&nbsp; <span className="name">{this.state.shape ? this.state.count[this.state.shape] : null}</span></div>
         <div className="shape-list">
           <div>
             <div className="shape square" data-shape="Square" onClick={this.handleClick}></div>
