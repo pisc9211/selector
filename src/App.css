@@ -90,6 +90,8 @@ body {
 .shape-list div {
   margin-top: 40px;
   transition: all 1s ease;
+  flex: 1 0 30%;
+  margin: 40px auto;
 }
 
 .clicked {
