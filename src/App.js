@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import Shape from './Shape';
+
 class App extends Component {
   state = {
     shape: ''
@@ -16,10 +18,11 @@ class App extends Component {
   }
 
   handleClick = (e) => {
-    let newObj = Object.assign(this.state.count);
-    newObj[e.target.dataset.shape]++;
+    let shape = e.target.getAttribute('name')
+    let newObj = Object.assign({}, this.state.count);
+    newObj[shape]++;
     this.setState({
-      shape: e.target.dataset.shape,
+      shape,
       count: newObj
     })
   }
@@ -27,35 +30,28 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <div className="navbar">Selected:&nbsp;&nbsp;&nbsp;&nbsp;<span className="name">{this.state.shape}</span> - Clicked: &nbsp;&nbsp;&nbsp;&nbsp; <span className="name">{this.state.shape ? this.state.count[this.state.shape] : null}</span></div>
-        <div className="shape-list">
-          <div>
-            <div className="shape square" data-shape="Square" onClick={this.handleClick}></div>
+        <h1 className="title">Shape &ndash; Selector</h1>
+        <div className="body">
+          <div className="result">
+            <h2>Tracker</h2>
+            <div className="current-shape">Current Shape: 
+              <div className="shape-name">
+                <strong>{this.state.shape ? this.state.shape : 'None'}</strong>
+              </div>
+            </div >
+            <div className="number-clicked">Times clicked: 
+              <div className="number">
+                <strong>{this.state.shape ? this.state.count[this.state.shape] : 0}</strong>
+              </div>
+            </div>
           </div>
-          <div>
-            <div className="shape circle" data-shape="Circle" onClick={this.handleClick}></div>
-          </div>
-          <div>
-            <div className="shape triangle" data-shape="Triangle" onClick={this.handleClick}></div>
-          </div>
-          <div> 
-            <div className="shape oval" data-shape="Oval" onClick={this.handleClick}></div>
-          </div>
-          <div>
-            <div className="shape star" data-shape="Star" onClick={this.handleClick}></div>
-          </div>
-          <div>
-            <div className="shape triangle_down" data-shape="Triangle_down" onClick={this.handleClick}></div>
-          </div>
-          <div>
-            <div className="shape triangle_right" data-shape="Triangle_right" onClick={this.handleClick}></div>
-          </div>
-          <div>
-            <div className="shape triangle_left" data-shape="Triangle_left" onClick={this.handleClick}></div>
-          </div>
-          <div>
-            <div className="shape trapezium" data-shape="Trapezium" onClick={this.handleClick}></div>
-          </div>
+          <div className="shape-list">
+            <ul>
+              {
+                this.state.count ? Object.keys(this.state.count).map(key => <Shape name={key} handleClick={this.handleClick}/>) : null
+              }
+            </ul>
+        </div>
         </div>
       </div>
     )
